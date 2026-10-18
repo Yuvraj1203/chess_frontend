@@ -1,13 +1,25 @@
 import { io, type Socket } from "socket.io-client";
 
-import { API_URL } from "./api";
+import { api, API_URL } from "./api";
 
 let socket: Socket | null = null;
 
-/** Single shared Socket.IO connection; authenticated by the httpOnly cookie. */
+/**
+ * Single shared Socket.IO connection, straight to the API origin. The auth
+ * cookie lives on the frontend's domain, so every (re)connect first swaps it
+ * for a short-lived socket token via the proxied REST API.
+ */
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io(API_URL, { withCredentials: true, autoConnect: false });
+    socket = io(API_URL, {
+      autoConnect: false,
+      auth: (cb) => {
+        api<{ token: string }>("/auth/socket-token").then(
+          ({ token }) => cb({ token }),
+          () => cb({}),
+        );
+      },
+    });
   }
   return socket;
 }

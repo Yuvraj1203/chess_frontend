@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Proxy REST calls to the NestJS API so its auth cookie is same-site.
+  async rewrites() {
+    return [{ source: "/api/:path*", destination: `${apiUrl}/api/:path*` }];
+  },
   experimental: {
     agentFeedback: true,
   },

@@ -1,5 +1,8 @@
+/** Backend origin. The browser only talks to it directly for Socket.IO. */
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
-const BASE = `${API_URL}/api/v1`;
+// REST goes through the Next.js rewrite in next.config.ts, so the auth cookie
+// is first-party on the frontend's domain (and visible to proxy.ts).
+const BASE = "/api/v1";
 
 export class ApiError extends Error {
   constructor(
