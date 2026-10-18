@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Toaster } from "sonner";
 
+import { useTheme } from "@/lib/theme";
+
 import { AuthProvider } from "./auth-provider";
 import { SocketProvider } from "./socket-provider";
 
@@ -21,7 +23,12 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       <AuthProvider>
         <SocketProvider>{children}</SocketProvider>
       </AuthProvider>
-      <Toaster richColors position="top-right" />
+      <ThemedToaster />
     </QueryClientProvider>
   );
+}
+
+function ThemedToaster() {
+  const theme = useTheme();
+  return <Toaster theme={theme} position="bottom-right" toastOptions={{ className: "font-sans" }} />;
 }

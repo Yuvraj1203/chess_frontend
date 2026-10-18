@@ -142,7 +142,7 @@ export function TournamentFormDialog({
               onChange={(e) => setStartsAt(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-between rounded-lg border p-3">
+          <div className="flex items-center justify-between rounded-xl border bg-muted/30 p-3.5">
             <div>
               <Label htmlFor="t-rematch">Allow rematches</Label>
               <p className="text-xs text-muted-foreground">
@@ -157,7 +157,7 @@ export function TournamentFormDialog({
             />
           </div>
           {!editing && (
-            <div className="flex items-center justify-between rounded-lg border p-3">
+            <div className="flex items-center justify-between rounded-xl border bg-muted/30 p-3.5">
               <div>
                 <Label htmlFor="t-open">Open for joining now</Label>
                 <p className="text-xs text-muted-foreground">
